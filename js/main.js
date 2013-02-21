@@ -75,7 +75,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		//Save data into Local Storage: Use Stringify to convert our object to a string.
 		localStorage.setItem(id, JSON.stringify(item));
 		alert("Timestomp was sucessful!");
-	}
+		window.location.reload();	}
 	
 	function getData(){
 		toggleControls("on");
@@ -91,11 +91,12 @@ window.addEventListener("DOMContentLoaded", function(){
 		$('items').style.display = "block";
 		for(var i=0, len=localStorage.length; i<len; i++){
 			var makeLi = document.createElement('li');
+			var linksLi = document.createElement('li');
 			makeList.appendChild(makeLi);
 			var key = localStorage.key(i);
 			var value = localStorage.getItem(key);
 			//convert the string from local storage value back to an object by using JSON.parse()
-			var obj = JSON.parse(value);
+			var obj = JSON.parse(value);			
 			var makeSubList = document.createElement('ul');
 			makeLi.appendChild(makeSubList);
 			for(var n in obj){
@@ -103,10 +104,33 @@ window.addEventListener("DOMContentLoaded", function(){
 				makeSubList.appendChild(makeSubli);
 				var optSubText = obj[n][0]+" "+obj[n][1];
 				makeSubli.innerHTML = optSubText;
-			}
-			
-		}
+				makeSubList.appendChild(linksLi)
+	}
+			makeItemLinks(localStorage.key(i), linksLi);
+	}
 		
+	}
+	
+	function makeItemLinks(key, linksLi){
+		var editLink = document.createElement('a');
+		editLink.href = "#";
+		editLink.key = key;
+		var editText = "Edit Stomp";
+		//editLink.addEventListener("click", editItem);
+		editLink.innerHTML = editText;
+		linksLi.appendChild(editLink);
+		
+		var breakTag = document.createElement('br');
+		linksLi.appendChild(breakTag);
+		
+		var deleteLink = document.createElement('a')
+		deleteLink.href = "#";
+		deleteLink.key = key;
+		var deleteText = "Delete Stomp";
+		//deleteLink.addEventListener("click", deleteItem);
+		deleteLink.innerHTML = deleteText;
+		linksLi.appendChild(deleteLink);
+				
 	}
 	
 	function clearLocal(){
@@ -120,7 +144,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 		
 	}
-	
+		
 	// Variable defaults
 	var contactGroups = ["--Choose A Group--", "Start", "End", "Arrival", "Departure" ],
 	preferred;

@@ -18,6 +18,7 @@ h1 {
 body {
 	background-image: url(../img/bkgTexture.png);
 	background-repeat: repeat;
+	
 }
 
 div {
@@ -28,13 +29,14 @@ div {
 	width: 80%;
 	margin-right: 10%;
 	margin-left: 10%;
-	position: fixed;
-	padding-bottom: 20%;
+	padding-bottom: 8px;
+	padding-top: 2px;
 	-moz-border-radius: 20px;
 	border-radius: 20px;
 	-webkit-box-shadow: 5px 5px 3px 4px rgba(0,0,0,0.5);
 	-moz-box-shadow: 5px 5px 3px 4px rgba(0,0,0,0.5);
 	box-shadow: 5px 5px 3px 4px rgba(0,0,0,0.5);
+	
 }
 
 span {
@@ -91,5 +93,3 @@ fieldset {
 #sstyle {
 	background-color: #FEDE52;
 }
-
-
