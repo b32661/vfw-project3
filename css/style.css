@@ -1,0 +1,95 @@
+/*   additem.html
+*    Jeremy Criddle
+*    VFW 1302	
+*    Project 2
+*/
+
+
+
+
+h1 {
+	font-family: Verdana, Geneva, sans-serif;
+	color: #F7ECC9;
+	background-color: #072111;
+}
+
+
+
+body {
+	background-image: url(../img/bkgTexture.png);
+	background-repeat: repeat;
+}
+
+div {
+	background-color: #20421B;
+	color: #FFEBB8;
+	background-repeat: no-repeat;
+	text-align: center;
+	width: 80%;
+	margin-right: 10%;
+	margin-left: 10%;
+	position: fixed;
+	padding-bottom: 20%;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	-webkit-box-shadow: 5px 5px 3px 4px rgba(0,0,0,0.5);
+	-moz-box-shadow: 5px 5px 3px 4px rgba(0,0,0,0.5);
+	box-shadow: 5px 5px 3px 4px rgba(0,0,0,0.5);
+}
+
+span {
+	color: #EB2917;
+	vertical-align: sub;
+	font-family: "Arial Black", Gadget, sans-serif;
+}
+a {
+	color: rgba(235,41,24,1);
+	background-position: center;
+}
+
+h2 {
+	font-family: "Times New Roman", Times, serif;
+	color: #FEDE52;
+}
+
+header {
+	margin-bottom: 10%;
+}
+
+
+nav {
+	background-color: #072111;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	margin-right: 40px;
+	margin-left: 40px;
+	margin-top: 10%;
+	-webkit-box-shadow: 3px 3px 1px 1px rgba(255,255,204,1);
+	-moz-box-shadow: 3px 3px 1px 1px rgba(255,255,204,1);
+	box-shadow: 3px 3px 1px 1px rgba(255,255,204,1);
+	padding-top: 2px;
+	padding-bottom: 6px;
+}
+ul {
+	text-align: justify;
+}
+
+li {
+	list-style-type: square;
+}
+
+
+label {
+	display: block;
+}
+
+fieldset {
+	margin-right: 5%;
+	margin-left: 5%;
+	border: medium ridge #F7ECC9;
+}
+#sstyle {
+	background-color: #FEDE52;
+}
+
+
