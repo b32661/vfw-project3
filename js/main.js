@@ -128,23 +128,27 @@ window.addEventListener("DOMContentLoaded", function(){
 		editLink.innerHTML = editText;
 		linksLi.appendChild(editLink);
 		
+		// add line break
 		var breakTag = document.createElement('br');
 		linksLi.appendChild(breakTag);
 		
+		//add delete single item link
 		var deleteLink = document.createElement('a')
 		deleteLink.href = "#";
 		deleteLink.key = key;
 		var deleteText = "Delete Stomp";
-		//deleteLink.addEventListener("click", deleteItem);
+		deleteLink.addEventListener("click", deleteItem);
 		deleteLink.innerHTML = deleteText;
 		linksLi.appendChild(deleteLink);
-				
 	}
 	
+	// edit single item
 	function editItem(){
+		//get the data from my item from local storage
 		var value = localStorage.getItem(this.key);
 		var item = JSON.parse(value);
 		
+		//show the form
 		toggleControls("off");
 		
 		$('groups').value = item.group[1];
@@ -167,6 +171,19 @@ window.addEventListener("DOMContentLoaded", function(){
 		var editSubmit = $('submit');
 		editSubmit.addEventListener("click", validate);
 		editSubmit.key = this.key;
+		
+	}
+	
+	function deleteItem(){
+		var ask = confirm("Are you sure you want to delete this contact?");
+		if(ask){
+			localStorage.removeItem(this.key);
+			window.location.reload();
+			alert("contact WAS deleted.")
+		} else{
+			alert("contact was NOT deleted.");
+			
+		}
 		
 	}
 	
