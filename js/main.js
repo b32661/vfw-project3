@@ -1,8 +1,8 @@
 /**
  *   Jeremy Criddle
  *   VFW 1302
- *   Project 2
- *  02-17-2013
+ *   Project 3
+ *  02-23-2013
  */
  
 //Wait to load until DOM is ready.
@@ -137,7 +137,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		var deleteStomp = document.createElement('a')
 		deleteStomp.href = "#";
 		deleteStomp.key = key;
-		var wipeText = "Delete Stomp";
+		var wipeText = "Delete a Stomp";
 		deleteStomp.addEventListener("click", deleteSingle);
 		deleteStomp.innerHTML = wipeText;
 		linksLi.appendChild(deleteStomp);
@@ -176,13 +176,13 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	function deleteSingle(){
-		var question = confirm("Are you sure you want to delete this contact?");
+		var question = confirm("Are you sure you want to delete this stomp?");
 		if(question){
 			localStorage.removeItem(this.key);
 			window.location.reload();
-			alert("contact WAS deleted.")
+			alert("Stomp was deleted.")
 		} else{
-			alert("contact was NOT deleted.");
+			alert("Stomp was NOT deleted.");
 			
 		}
 		
@@ -190,10 +190,10 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	function cleanLocal(){
 		if(localStorage.length === 0){
-			alert("There is no data to clean.");
+			alert("There are no stomps to clean.");
 		}else{
 			localStorage.clean();
-			alert("All contacts are deleted!");
+			alert("All stomps are removed!");
 			window.location.reload();
 			return false;
 		}
@@ -217,7 +217,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		//get error messages		
 		var messageArray = [];
 		if(getGroup.value == "--What--"){
-			var groupError = "Please choose a group.";
+			var groupError = "Please choose the first option.";
 			getGroup.style.border = "2px solid red";
 			messageArray.push(groupError);
 		}
@@ -259,7 +259,6 @@ window.addEventListener("DOMContentLoaded", function(){
 	var grouping = ["--What--", "Start", "End", "Arrival", "Departure" ],
 	preferred,
 	errorMes = $('errorList');
-	;
 	formatTime();
 	
 	//set link $ submit click events
