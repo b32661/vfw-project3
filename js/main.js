@@ -143,7 +143,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 		$('groups').value = item.group[1];
 		$('sure').value = item.sure[1];
-		var radios = document.forms[0].timeFormater;
+		var radios = document.forms[0].timeF;
 		for(var i=0; i<radios.length; i++){
 			if(radios[i].value == "standard" && item.preFormat[1] == "standard"){
 				radios[i].setAttribute("checked", "checked");
@@ -155,6 +155,12 @@ window.addEventListener("DOMContentLoaded", function(){
 		$('eventDescription').value = item.eventDescription[1];
 		$('eventDate').value = item.eventDate[1];
 		$('eventTime').value = item.eventTime[1];		
+		
+		save.removeEventListener("click", storeData);
+		$('submit').value = "Edit Contact";
+		var editSubmit = $('submit');
+		editSubmit.addEventListener("click", validate);
+		editSubmit.key = this.key;
 		
 	}
 	
@@ -169,10 +175,65 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 		
 	}
+	
+	function validate(e){
+		var getGroup = $('groups');
+		var getName = $('eventName');
+		var getTime = $('eventTime');
+		var getDate = $('eventDate');
+		
+		//reset error messages
+		errMsg.innerHTML = "";
+		getGroup.style.border = "1px solid black";		
+		getName.style.border = "1px solid black";		
+		getTime.style.border = "1px solid black";
+		getDate.style.border = "1px solid black";
+		
+				
+		//get error messages		
+		var messageAry = [];
+		if(getGroup.value=="--Choose A Group--"){
+			var groupError = "Please choose a group.";
+			getGroup.style.border = "2px solid red";
+			messageAry.push(groupError);
+		}
+		
+		//name validation
+		if(getName.value === ""){
+			var getNameError = "Please enter a name.";
+			getName.style.border = "2px solid red";
+			messageAry.push(getNameError);
+		}
+		//time validation
+		if(getTime.value === ""){
+			var getTimeError = "Please enter a time.";
+			getTime.style.border = "2px solid red";
+			messageAry.push(getTimeError);
+		}
+		
+		if(getDate.value === ""){
+			var getDateError = "Please enter a date.";
+			getDate.style.border = "2px solid red";
+			messageAry.push(getDateError);
+		}	
+		//if there were errors, display them on the screen
+		if(messageAry.length >= 1){
+			for(var i=0, j=messageAry.length; i<j; i++){
+				var txt = document.createElement('li');
+				txt.innerHTML = messageAry[i];
+				errMsg.appendChild(txt);
+			}
+			e.preventDefault();
+			return false;	
+		} else {
+			storeData();
+		}
+	}
 		
 	// Variable defaults
 	var contactGroups = ["--Choose A Group--", "Start", "End", "Arrival", "Departure" ],
-	preferred ;
+	preferred,
+	errMsg = $('errors');
 	
 	formatTime();
 	
@@ -181,7 +242,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	displayLink.addEventListener("click", getData);
 	var clearLink = $('clear');
 	clearLink.addEventListener("click", clearLocal);
-	var save = $('stomp');
-	save.addEventListener("click", storeData);
+	var save = $('submit');
+	save.addEventListener("click", validate);
 	
 });
