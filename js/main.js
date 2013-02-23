@@ -68,19 +68,21 @@ window.addEventListener("DOMContentLoaded", function(){
 			item.group = ["Group:", $('groups').value];
 			item.sure = ["Sure:", $('sure').value];
 			item.preFormat = ["Format:", preferred];
-			item.fname = ["Name:", $('eventName').value];
-			item.lname = ["Description:", $('eventDescription').value];
-			item.email = ["Time:", $('eventTime').value];
-			item.date = ["Date:", $('eventDate').value];
+			item.eventName = ["Name:", $('eventName').value];
+			item.eventDescription = ["Description:", $('eventDescription').value];
+			item.eventTime = ["Time:", $('eventTime').value];
+			item.eventDate = ["Date:", $('eventDate').value];
 		//Save data into Local Storage: Use Stringify to convert our object to a string.
 		localStorage.setItem(id, JSON.stringify(item));
 		alert("Timestomp was sucessful!");
-		window.location.reload();	}
+		window.location.reload();
+		}
 	
 	function getData(){
 		toggleControls("on");
 		if(localStorage.length === 0){
-			alert("There are no Stomped times in Local Storage.");
+			alert("There are no Stomped times to display.");
+			window.location.reload();
 		}
 		//Write Data from Local Storage to the browser.
 		var makeDiv = document.createElement('div');
@@ -116,7 +118,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		editLink.href = "#";
 		editLink.key = key;
 		var editText = "Edit Stomp";
-		//editLink.addEventListener("click", editItem);
+		editLink.addEventListener("click", editItem);
 		editLink.innerHTML = editText;
 		linksLi.appendChild(editLink);
 		
@@ -133,6 +135,29 @@ window.addEventListener("DOMContentLoaded", function(){
 				
 	}
 	
+	function editItem(){
+		var value = localStorage.getItem(this.key);
+		var item = JSON.parse(value);
+		
+		toggleControls("off");
+		
+		$('groups').value = item.group[1];
+		$('sure').value = item.sure[1];
+		var radios = document.forms[0].timeFormater;
+		for(var i=0; i<radios.length; i++){
+			if(radios[i].value == "standard" && item.preFormat[1] == "standard"){
+				radios[i].setAttribute("checked", "checked");
+			} else if(radios[i].value == "military" && item.preFormat[1] == "military"){
+				radios[i].setAttribute("checked	", "checked");	
+			}
+		}		
+		$('eventName').value = item.eventName[1];
+		$('eventDescription').value = item.eventDescription[1];
+		$('eventDate').value = item.eventDate[1];
+		$('eventTime').value = item.eventTime[1];		
+		
+	}
+	
 	function clearLocal(){
 		if(localStorage.length === 0){
 			alert("There is no data to clear.");
@@ -147,7 +172,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 	// Variable defaults
 	var contactGroups = ["--Choose A Group--", "Start", "End", "Arrival", "Departure" ],
-	preferred;
+	preferred ;
 	
 	formatTime();
 	
