@@ -90,6 +90,13 @@ fieldset {
 	margin-left: 5%;
 	border: medium ridge #F7ECC9;
 }
-#sstyle {
+
+/*
+*a:link{}
+*a:visited{}
+*a:hover{}
+*a:active{}
+*/
+.buttons {
 	background-color: #FEDE52;
 }

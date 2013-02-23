@@ -9,48 +9,48 @@
 window.addEventListener("DOMContentLoaded", function(){
 	//getElemtntById Function
 	function $(x){
-		var theElement = document.getElementById(x);
-		return theElement;
+		var myElement = document.getElementById(x);
+		return myElement;
 	}
 	
 	//Create select field element and populate it with options.
 	function formatTime(){
 		var formTag = document.getElementsByTagName("form"), //formTag is an array of all the form tags.
 			selectLi = $('select'),
-			makeSelect = document.createElement('select');
-			makeSelect.setAttribute("id", "groups");
-		for(var i=0, j=contactGroups.length; i<j; i++){
-				var makeOption = document.createElement('option');
-				var optText = contactGroups[i];
-				makeOption.setAttribute("value", optText);
-				makeOption.innerHTML = optText;
-				makeSelect.appendChild(makeOption);
+			makeSelection = document.createElement('select');
+			makeSelection.setAttribute("id", "groups");
+		for(var i=0, j=grouping.length; i<j; i++){
+				var myOption = document.createElement('option');
+				var optText = grouping[i];
+				myOption.setAttribute("value", optText);
+				myOption.innerHTML = optText;
+				makeSelection.appendChild(myOption);
 		}
-		selectLi.appendChild(makeSelect);
+		selectLi.appendChild(makeSelection);
 		
 	}
 	
 	//Find value of selected radio button.
-	function getSelectedRadio(){
-		var radios = document.forms[0].timeF;
-		for(var i=0; i<radios.length; i++){
-			if(radios[i].checked){
-				preferred = radios[i].value;
+	function getRightRadio(){
+		var radioBut = document.forms[0].timeF;
+		for(var i=0; i<radioBut.length; i++){
+			if(radioBut[i].checked){
+				preferred = radioBut[i].value;
 			}
 		}
 	}
 		
-	function toggleControls(n){
+	function toggleSwitch(n){
 		switch(n){
 			case "on":
 				$('stomper').style.display = "none";
-				$('clear').style.display = "inline";
+				$('clean').style.display = "inline";
 				$('displayIt').style.display = "none";
 				$('addNew').style.display = "inline";
 				break;
 			case "off":
 				$('stomper').style.display = "block";
-				$('clear').style.display = "inline";
+				$('clean').style.display = "inline";
 				$('displayIt').style.display = "inline";
 				$('addNew').style.display = "none";
 				$('items').style.display = "none";
@@ -60,16 +60,16 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 	}
 	
-	function storeData(key){
+	function storeToLocal(key){
 	//if there is no key, this is a brand new item and we need a new key
 		if(!key){
 			var id = Math.floor(Math.random()*100000001);
 		}else{
-		//set the id to the existion key we're edition so that it will save over the data
+		//set the id to the existion key we're edition so that it will record over the data
 			id = key;
 		}
 		//Gather up all our form field values and store them in an object. Object properties contain array with the form label and input value
-		getSelectedRadio();
+		getRightRadio();
 		var item = {};
 			item.group = ["Group:", $('groups').value];
 			item.sure = ["Sure:", $('sure').value];
@@ -78,16 +78,17 @@ window.addEventListener("DOMContentLoaded", function(){
 			item.eventDescription = ["Description:", $('eventDescription').value];
 			item.eventTime = ["Time:", $('eventTime').value];
 			item.eventDate = ["Date:", $('eventDate').value];
-		//Save data into Local Storage: Use Stringify to convert our object to a string.
+		//record data into Local Storage: Use Stringify to convert our object to a string.
 		localStorage.setItem(id, JSON.stringify(item));
-		alert("Timestomp was sucessful!");
+		alert("Timestomp was successful!");
 		window.location.reload();
 		}
 	
-	function getData(){
-		toggleControls("on");
+	function grabData(){
+		toggleSwitch("on");
 		if(localStorage.length === 0){
 			alert("There are no Stomped times to display.");
+			
 			window.location.reload();
 		}
 		//Write Data from Local Storage to the browser.
@@ -114,12 +115,12 @@ window.addEventListener("DOMContentLoaded", function(){
 				makeSubli.innerHTML = optSubText;
 				makeSubList.appendChild(linksLi)
 	}
-			makeItemLinks(localStorage.key(i), linksLi);
+			makeSomeLinks(localStorage.key(i), linksLi);
 	}
 		
 	}
 	
-	function makeItemLinks(key, linksLi){
+	function makeSomeLinks(key, linksLi){
 		var editLink = document.createElement('a');
 		editLink.href = "#";
 		editLink.key = key;
@@ -133,13 +134,13 @@ window.addEventListener("DOMContentLoaded", function(){
 		linksLi.appendChild(breakTag);
 		
 		//add delete single item link
-		var deleteLink = document.createElement('a')
-		deleteLink.href = "#";
-		deleteLink.key = key;
-		var deleteText = "Delete Stomp";
-		deleteLink.addEventListener("click", deleteItem);
-		deleteLink.innerHTML = deleteText;
-		linksLi.appendChild(deleteLink);
+		var deleteStomp = document.createElement('a')
+		deleteStomp.href = "#";
+		deleteStomp.key = key;
+		var wipeText = "Delete Stomp";
+		deleteStomp.addEventListener("click", deleteSingle);
+		deleteStomp.innerHTML = wipeText;
+		linksLi.appendChild(deleteStomp);
 	}
 	
 	// edit single item
@@ -149,16 +150,16 @@ window.addEventListener("DOMContentLoaded", function(){
 		var item = JSON.parse(value);
 		
 		//show the form
-		toggleControls("off");
+		toggleSwitch("off");
 		
 		$('groups').value = item.group[1];
 		$('sure').value = item.sure[1];
-		var radios = document.forms[0].timeF;
-		for(var i=0; i<radios.length; i++){
-			if(radios[i].value == "Standard" && item.preFormat[1] == "Standard"){
-				radios[i].setAttribute("checked", "checked");
-			} else if(radios[i].value == "Military" && item.preFormat[1] == "Military"){
-				radios[i].setAttribute("checked", "checked");	
+		var radioBut = document.forms[0].timeF;
+		for(var i=0; i<radioBut.length; i++){
+			if(radioBut[i].value == "Standard" && item.preFormat[1] == "Standard"){
+				radioBut[i].setAttribute("checked", "checked");
+			} else if(radioBut[i].value == "Military" && item.preFormat[1] == "Military"){
+				radioBut[i].setAttribute("checked", "checked");	
 			}
 		}		
 		$('eventName').value = item.eventName[1];
@@ -166,7 +167,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		$('eventDate').value = item.eventDate[1];
 		$('eventTime').value = item.eventTime[1];		
 		
-		save.removeEventListener("click", storeData);
+		record.removeEventListener("click", storeToLocal);
 		$('submit').value = "Edit Contact";
 		var editSubmit = $('submit');
 		editSubmit.addEventListener("click", validate);
@@ -174,9 +175,9 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 	}
 	
-	function deleteItem(){
-		var ask = confirm("Are you sure you want to delete this contact?");
-		if(ask){
+	function deleteSingle(){
+		var question = confirm("Are you sure you want to delete this contact?");
+		if(question){
 			localStorage.removeItem(this.key);
 			window.location.reload();
 			alert("contact WAS deleted.")
@@ -187,11 +188,11 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 	}
 	
-	function clearLocal(){
+	function cleanLocal(){
 		if(localStorage.length === 0){
-			alert("There is no data to clear.");
+			alert("There is no data to clean.");
 		}else{
-			localStorage.clear();
+			localStorage.clean();
 			alert("All contacts are deleted!");
 			window.location.reload();
 			return false;
@@ -206,7 +207,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		var getDate = $('eventDate');
 		
 		//reset error messages
-		errMsg.innerHTML = "";
+		errorMes.innerHTML = "";
 		getGroup.style.border = "1px solid black";		
 		getName.style.border = "1px solid black";		
 		getTime.style.border = "1px solid black";
@@ -214,59 +215,59 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 				
 		//get error messages		
-		var messageAry = [];
-		if(getGroup.value == "--Choose A Group--"){
+		var messageArray = [];
+		if(getGroup.value == "--What--"){
 			var groupError = "Please choose a group.";
 			getGroup.style.border = "2px solid red";
-			messageAry.push(groupError);
+			messageArray.push(groupError);
 		}
 		
 		//name validation
 		if(getName.value === ""){
 			var getNameError = "Please enter a name.";
 			getName.style.border = "2px solid red";
-			messageAry.push(getNameError);
+			messageArray.push(getNameError);
 		}
 		//time validation
 		if(getTime.value === ""){
 			var getTimeError = "Please enter a time.";
 			getTime.style.border = "2px solid red";
-			messageAry.push(getTimeError);
+			messageArray.push(getTimeError);
 		}
 		
 		if(getDate.value === ""){
 			var getDateError = "Please enter a date.";
 			getDate.style.border = "2px solid red";
-			messageAry.push(getDateError);
+			messageArray.push(getDateError);
 		}	
-		//if there were errors, display them on the screen
-		if(messageAry.length >= 1){
-			for(var i=0, j=messageAry.length; i<j; i++){
+		//if there were errorList, display them on the screen
+		if(messageArray.length >= 1){
+			for(var i=0, j=messageArray.length; i<j; i++){
 				var txt = document.createElement('li');
-				txt.innerHTML = messageAry[i];
-				errMsg.appendChild(txt);
+				txt.innerHTML = messageArray[i];
+				errorMes.appendChild(txt);
 			}
 			e.preventDefault();
 			return false;	
 		} else {
-		//if all is ok, save our data. send the key value(which came from the editData function. remember this key value was passed through the editSubmit event listener as a property
-			storeData(this.key);
+		//if all is ok, record our data. send the key value(which came from the editData function. remember this key value was passed through the editSubmit event listener as a property
+			storeToLocal(this.key);
 		}
 	}
 		
 	// Variable defaults
-	var contactGroups = ["--Choose A Group--", "Start", "End", "Arrival", "Departure" ],
+	var grouping = ["--What--", "Start", "End", "Arrival", "Departure" ],
 	preferred,
-	errMsg = $('errors');
+	errorMes = $('errorList');
 	;
 	formatTime();
 	
 	//set link $ submit click events
-	var displayLink = $('displayIt');
-	displayLink.addEventListener("click", getData);
-	var clearLink = $('clear');
-	clearLink.addEventListener("click", clearLocal);
-	var save = $('submit');
-	save.addEventListener("click", validate);
+	var displayMe = $('displayIt');
+	displayMe.addEventListener("click", grabData);
+	var cleanLink = $('clean');
+	cleanLink.addEventListener("click", cleanLocal);
+	var record = $('submit');
+	record.addEventListener("click", validate);
 	
 });
