@@ -32,7 +32,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	//Find value of selected radio button.
 	function getSelectedRadio(){
-		var radios = document.forms[0].timeFormater;
+		var radios = document.forms[0].timeF;
 		for(var i=0; i<radios.length; i++){
 			if(radios[i].checked){
 				preferred = radios[i].value;
@@ -60,8 +60,14 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 	}
 	
-	function storeData(){
-		var id = Math.floor(Math.random()*100000001);
+	function storeData(key){
+	//if there is no key, this is a brand new item and we need a new key
+		if(!key){
+			var id = Math.floor(Math.random()*100000001);
+		}else{
+		//set the id to the existion key we're edition so that it will save over the data
+			id = key;
+		}
 		//Gather up all our form field values and store them in an object. Object properties contain array with the form label and input value
 		getSelectedRadio();
 		var item = {};
@@ -145,10 +151,10 @@ window.addEventListener("DOMContentLoaded", function(){
 		$('sure').value = item.sure[1];
 		var radios = document.forms[0].timeF;
 		for(var i=0; i<radios.length; i++){
-			if(radios[i].value == "standard" && item.preFormat[1] == "standard"){
+			if(radios[i].value == "Standard" && item.preFormat[1] == "Standard"){
 				radios[i].setAttribute("checked", "checked");
-			} else if(radios[i].value == "military" && item.preFormat[1] == "military"){
-				radios[i].setAttribute("checked	", "checked");	
+			} else if(radios[i].value == "Military" && item.preFormat[1] == "Military"){
+				radios[i].setAttribute("checked", "checked");	
 			}
 		}		
 		$('eventName').value = item.eventName[1];
@@ -192,7 +198,7 @@ window.addEventListener("DOMContentLoaded", function(){
 				
 		//get error messages		
 		var messageAry = [];
-		if(getGroup.value=="--Choose A Group--"){
+		if(getGroup.value == "--Choose A Group--"){
 			var groupError = "Please choose a group.";
 			getGroup.style.border = "2px solid red";
 			messageAry.push(groupError);
@@ -226,7 +232,8 @@ window.addEventListener("DOMContentLoaded", function(){
 			e.preventDefault();
 			return false;	
 		} else {
-			storeData();
+		//if all is ok, save our data. send the key value(which came from the editData function. remember this key value was passed through the editSubmit event listener as a property
+			storeData(this.key);
 		}
 	}
 		
@@ -234,7 +241,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	var contactGroups = ["--Choose A Group--", "Start", "End", "Arrival", "Departure" ],
 	preferred,
 	errMsg = $('errors');
-	
+	;
 	formatTime();
 	
 	//set link $ submit click events
